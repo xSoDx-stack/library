@@ -40,7 +40,7 @@ public class HibernateConfig {
         Properties properties = new Properties();
         properties.put("hibernate.dialect", env.getRequiredProperty("hibernate.dialect"));
         properties.put("hibernate.show_sql", env.getRequiredProperty("hibernate.show_sql"));
-        properties.put("spring.jpa.properties.hibernate.jdbc.batch_size", env.getRequiredProperty("spring.jpa.properties.hibernate.jdbc.batch_size"));
+        properties.put("hibernate.jdbc.batch_size", env.getRequiredProperty("hibernate.jdbc.batch_size"));
         return properties;
     }
 

@@ -14,15 +14,15 @@ public class Person {
     @Column(name = "full_name")
     private String fullName;
 
-    @Column(name = "age")
-    private int age;
+    @Column(name = "year")
+    private int year;
 
     public Person() {
     }
 
-    public Person(String fullName, int age) {
+    public Person(String fullName, int year) {
         this.fullName = fullName;
-        this.age = age;
+        this.year = year;
     }
 
     public int getId() {
@@ -41,12 +41,12 @@ public class Person {
         this.fullName = fullName;
     }
 
-    public int getAge() {
-        return age;
+    public int getYear() {
+        return year;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setYear(int year) {
+        this.year = year;
     }
 
     @Override
@@ -54,7 +54,7 @@ public class Person {
         return "Person{" +
                 "id=" + id +
                 ", fullName='" + fullName + '\'' +
-                ", age=" + age +
+                ", age=" + year +
                 '}';
     }
 }
