@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" th:href="@{/styles/css/bootstrap.css}">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${people.getFullName()}">FullName</title>
+</head>
+<body>
+<table class="table table-bordered">
+    <thead class="table-primary">
+    <tr>
+        <th scope="col"><a th:href="@{/}">Главная</a></th>
+        <th scope="col">Удалить человека</th>
+    </tr>
+    </thead>
+    <thead class="table-dark">
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">ФИО</th>
+        <th scope="col">Год рождения</th>
+        <th scope="col">Операция</th>
+    </tr>
+    </thead>
+    <tbody class="table-group-divider">
+    <tr>
+        <th>#</th>
+        <td th:text="${people.getFullName}">FullName</td>
+        <td th:text="${people.getAge()}">age</td>
+        <td>edit</td>
+    <tr>
+        <td colspan="4">
+            <table class="table mb-0">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">ФИО</th>
+                    <th scope="col">Год рождения</th>
+                    <th scope="col">Операция</th>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
