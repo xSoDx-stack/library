@@ -31,9 +31,12 @@ public class PersonDAO {
         return session.get(Person.class, id);
     }
 
-    @Transactional(readOnly = true)
-    public Person getOwnerBooks(int id){
+    @Transactional
+    public void editPerson(int id, Person people){
         Session session = sessionFactory.getCurrentSession();
-        return null;
+        Person person = session.get(Person.class, id);
+        person.setFullName(people.getFullName());
+        person.setYear(people.getYear());
+        session.merge(person);
     }
 }

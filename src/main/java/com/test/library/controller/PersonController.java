@@ -1,13 +1,12 @@
 package com.test.library.controller;
 
 import com.test.library.dao.PersonDAO;
+import com.test.library.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/")
@@ -15,13 +14,13 @@ public class PersonController {
     private final PersonDAO personDAO;
 
     @Autowired
-    public PersonController(PersonDAO personDAO){
+    public PersonController(PersonDAO personDAO) {
         this.personDAO = personDAO;
     }
 
     @GetMapping("favicon.ico")
     @ResponseBody
-    public void disableFavicon(){
+    public void disableFavicon() {
     }
 
     @GetMapping()
@@ -31,12 +30,22 @@ public class PersonController {
     }
 
     @GetMapping("/{id}")
-    public String edit(Model model, @PathVariable int id){
-        if(personDAO.showPerson(id) != null){
+    public String show(Model model, @PathVariable int id) {
+        if (personDAO.showPerson(id) != null) {
             model.addAttribute("people", personDAO.showPerson(id));
             return "person/peopleShow";
         }
-        return  "redirect:/";
+        return "redirect:/";
     }
 
+    @RequestMapping("/{id}/edit")
+    public String edit(@ModelAttribute("people") Person people,
+                       BindingResult bindingResult,
+                       @PathVariable("id") int id) {
+        personDAO.editPerson(id, people);
+    return "redirect:/";
+    }
 }
+
+
+

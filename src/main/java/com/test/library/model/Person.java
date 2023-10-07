@@ -54,7 +54,7 @@ public class Person {
         return "Person{" +
                 "id=" + id +
                 ", fullName='" + fullName + '\'' +
-                ", age=" + year +
+                ", year=" + year +
                 '}';
     }
 }

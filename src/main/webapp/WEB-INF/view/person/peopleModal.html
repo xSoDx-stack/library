@@ -1,0 +1,48 @@
+<!------------------------------------------------------------------------------->
+<div th:fragment="ModaltoBatch" class="modal fade" id="BatchModal" tabindex="-1" aria-labelledby="BatchModalEdit" aria-hidden="true">
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="BatchModalEdit">Внесите количество тестовых пользователй</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </div>
+        <form th:method="POST" th:action="@{/batch/person}">
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="atm" class="form-label">Введите количество тестовых пользователей</label>
+                    <input type="number" class="form-control" id="atm" th:name="atm">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Создать</button>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+<!------------------------------------------------------------------------------------->
+<div th:fragment="ModaltoEditPerson" class="modal fade" id="EditPerson" tabindex="-1" aria-labelledby="EditPersonModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="EditPersonModal">Внесите изменения для пользователя</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <form>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Измените имя пользователя ФИО</label>
+                        <input type="text" class="form-control" id="name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="year" class="form-label">Измените имя пользователя</label>
+                        <input type="text" class="form-control" id="year">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Изменить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
