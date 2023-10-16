@@ -24,9 +24,8 @@ public class PersonDAO {
         Session session = sessionFactory.getCurrentSession();
         return  session.createQuery("select p from Person p", Person.class).getResultList();
     }
-
     @Transactional(readOnly = true)
-    public Person showPerson(int id){
+    public Person index(int id){
         Session session = sessionFactory.getCurrentSession();
         return session.get(Person.class, id);
     }
@@ -37,6 +36,18 @@ public class PersonDAO {
         Person person = session.get(Person.class, id);
         person.setFullName(people.getFullName());
         person.setYear(people.getYear());
-        session.merge(person);
+        session.merge(people);
+    }
+    @Transactional
+    public void delete(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        Person person = session.get(Person.class, id);
+        session.remove(person);
+    }
+
+    @Transactional
+    public void save(Person people) {
+        Session session = sessionFactory.getCurrentSession();
+        session.persist(people);
     }
 }

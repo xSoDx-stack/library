@@ -5,7 +5,6 @@ import com.test.library.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -24,27 +23,38 @@ public class PersonController {
     }
 
     @GetMapping()
-    public String index(Model model) {
-        model.addAttribute("people", personDAO.index());
+    public String index(Model model, @ModelAttribute("people") Person person){
+        model.addAttribute("person", personDAO.index());
         return "person/people";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}/show")
     public String show(Model model, @PathVariable int id) {
-        if (personDAO.showPerson(id) != null) {
-            model.addAttribute("people", personDAO.showPerson(id));
-            return "person/peopleShow";
-        }
+        model.addAttribute("people", personDAO.index(id));
+        return "person/peopleShow";
+    }
+
+    @PostMapping("/{id}/edit")
+    public String edit(@ModelAttribute("people") Person people,
+                       @PathVariable int id){
+        personDAO.editPerson(id, people);
+        System.out.println("Пользователь успешно изменён");
+        return "person/peopleShow";
+    }
+
+    @GetMapping("/{id}/delete")
+    public String delete(@PathVariable("id") int id){
+        personDAO.delete(id);
         return "redirect:/";
     }
 
-    @RequestMapping("/{id}/edit")
-    public String edit(@ModelAttribute("people") Person people,
-                       BindingResult bindingResult,
-                       @PathVariable("id") int id) {
-        personDAO.editPerson(id, people);
-    return "redirect:/";
+    @PostMapping("/people/new")
+    public String save(@ModelAttribute("people") Person people){
+        personDAO.save(people);
+        System.out.println("Новый пользователь создан");
+        return "redirect:/";
     }
+
 }
 
 

@@ -1,48 +1,53 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <!------------------------------------------------------------------------------->
 <div th:fragment="ModaltoBatch" class="modal fade" id="BatchModal" tabindex="-1" aria-labelledby="BatchModalEdit" aria-hidden="true">
-<div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h1 class="modal-title fs-5" id="BatchModalEdit">Внесите количество тестовых пользователй</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-        </div>
-        <form th:method="POST" th:action="@{/batch/person}">
-            <div class="modal-body">
-                <div class="mb-3">
-                    <label for="atm" class="form-label">Введите количество тестовых пользователей</label>
-                    <input type="number" class="form-control" id="atm" th:name="atm">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Создать</button>
-            </div>
-        </form>
-    </div>
-</div>
-</div>
-<!------------------------------------------------------------------------------------->
-<div th:fragment="ModaltoEditPerson" class="modal fade" id="EditPerson" tabindex="-1" aria-labelledby="EditPersonModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="EditPersonModal">Внесите изменения для пользователя</h1>
+                <h1 class="modal-title fs-5" id="BatchModalEdit">Внесите количество тестовых пользователй</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
             </div>
-            <form>
+            <form th:method="POST" th:action="@{/batch/person}">
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="name" class="form-label">Измените имя пользователя ФИО</label>
-                        <input type="text" class="form-control" id="name">
-                    </div>
-                    <div class="mb-3">
-                        <label for="year" class="form-label">Измените имя пользователя</label>
-                        <input type="text" class="form-control" id="year">
+                        <label for="atm" class="form-label">Введите количество тестовых пользователей</label>
+                        <input type="number" class="form-control" id="atm" th:name="atm">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Изменить</button>
+                    <button type="submit" class="btn btn-primary">Создать</button>
                 </div>
             </form>
         </div>
     </div>
+</div>
+<!------------------------------------------------------------------------------------->
+
+<div th:fragment="ModaltoEditPerson(id)"  class="modal fade"  th:id="'ModaltoEditPerson' + ${id}" tabindex="-1" aria-labelledby="EditPersonModal" aria-hidden="true">
+    <form th:method="POST" th:action="${people.getFullName()} != null  ? @{/{id}/edit(id=${people.getId()})} : @{/people/new}" th:object="${people}" >
+    <div class="modal-dialog">t
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 th:text="${people.getFullName()} != null ? 'Внесите изменения для пользователя' : 'Создание нового пользователя'"
+                        class="modal-title fs-5" id="EditPersonModal">Value</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label th:if="${people.getId}" for="name" class="form-label">Измените имя пользователя ФИО</label>
+                        <label th:unless="${people.getId}" for="name" class="form-label">Укажите ФИО</label>
+                        <input type="text" class="form-control" id="name" th:field="*{FullName}"/>
+                    </div>
+                    <div class="mb-3">
+                        <label th:if="${people.getId}" for="year" class="form-label">Измените год пользователя</label>
+                        <label th:unless="${people.getId}" for="year" class="form-label">Укажите год рождения</label>
+                        <input type="number" class="form-control" id="year" th:field="*{year}"/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                        <button th:type="submit" class="btn btn-primary" th:text="${people.getFullName()!= null} ? 'Изменить' : 'Создать'">Value</button>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
