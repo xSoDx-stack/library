@@ -37,7 +37,7 @@ public class PersonController {
     @PostMapping("/{id}/edit")
     public String edit(@ModelAttribute("people") Person people,
                        @PathVariable int id){
-        personDAO.editPerson(id, people);
+        personDAO.edit(id, people);
         System.out.println("Пользователь успешно изменён");
         return "person/peopleShow";
     }

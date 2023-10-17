@@ -1,6 +1,7 @@
 package com.test.library.dao;
 
 import com.github.javafaker.Faker;
+import com.test.library.model.Book;
 import com.test.library.model.Person;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -29,6 +30,16 @@ public class BatchDao {
             session.persist(person);
         }
 
+    }
+
+    @Transactional
+    public void createBook(int atm){
+        Session session = sessionFactory.getCurrentSession();
+        Faker faker = new Faker(new Locale("ru", "RU"));
+        for(int i = 0; i < atm; i++){
+            Book book = new Book(faker.book().title(), faker.book().author(), faker.number().numberBetween(1900, 2023));
+            session.persist(book);
+        }
     }
 
 

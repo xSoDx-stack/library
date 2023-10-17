@@ -3,6 +3,8 @@ package com.test.library.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class Person {
 
@@ -16,6 +18,9 @@ public class Person {
 
     @Column(name = "year")
     private int year;
+
+    @OneToMany(mappedBy = "person", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    private List<Book> books;
 
     public Person() {
     }
@@ -49,12 +54,4 @@ public class Person {
         this.year = year;
     }
 
-    @Override
-    public String toString() {
-        return "Person{" +
-                "id=" + id +
-                ", fullName='" + fullName + '\'' +
-                ", year=" + year +
-                '}';
-    }
 }

@@ -1,0 +1,55 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!------------------------------------------------------------------------------->
+<div th:fragment="ModaltoBatch" class="modal fade" id="BatchModal" tabindex="-1" aria-labelledby="BatchModalEdit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="BatchModalEdit">Внесите количество тестовых книг</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <form th:method="POST" th:action="@{/batch/books}">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="atm" class="form-label">Введите количество тестовых книг</label>
+                        <input type="number" class="form-control" id="atm" th:name="atm">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Создать</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!------------------------------------------------------------------------------------->
+
+<div th:fragment="ModaltoEditBook(id)"  class="modal fade"  th:id="'ModaltoEditBook' + ${id}" tabindex="-1" aria-labelledby="EditBookModal" aria-hidden="true">
+    <form th:method="POST" th:action="${book.getName()} != null  ? @{/books/{id}/edit(id=${book.getId()})} : @{/books/new}" th:object="${book}" >
+    <div class="modal-dialog">t
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 th:text="${book.getName()} != null ? 'Внесите изменения для книги' : 'Создание новой книги'"
+                        class="modal-title fs-5" id="EditBookModal"/>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="name" class="form-label" th:text="${book.getName()} != null ? 'Измените имя книги' : 'Укажите имя книги'"/>
+                        <input type="text" class="form-control" id="name" th:field="*{Name}"/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="author" class="form-label" th:text="${book.getName()} != null ? 'Измените автора книги' : 'Укажите автора книги'"/>
+                        <input type="text" class="form-control" id="author" th:field="*{author}"/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="year" class="form-label" th:text="${book.getName()} != null ? 'Измените год издания книги' : 'Укажите год издания книги'"/>
+                        <input type="number" class="form-control" id="year" th:field="*{Year}"/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                        <button th:type="submit" class="btn btn-primary" th:text="${book.getName()!= null} ? 'Изменить' : 'Создать'">Value</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

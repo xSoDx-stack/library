@@ -25,8 +25,18 @@ public class BatchController {
         }
         batchDao.createPerson(1);
         return "redirect:/";
-
     }
+
+    @RequestMapping("/books")
+    public String batchBook(@RequestParam(value = "atm") int atm){
+        if (atm > 0){
+            batchDao.createBook(atm);
+            return "redirect:/books";
+        }
+        batchDao.createBook(1);
+        return "redirect:/books";
+    }
+
 
 
 
