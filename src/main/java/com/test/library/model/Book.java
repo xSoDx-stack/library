@@ -22,10 +22,11 @@ public class Book {
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     private Person person;
 
+
     public Book() {
     }
 
-    public Book (String name, String author, int year) {
+    public Book(String name, String author, int year) {
         this.name = name;
         this.author = author;
         this.year = year;
@@ -63,11 +64,12 @@ public class Book {
         this.year = year;
     }
 
-    public Person getPeople() {
+    public Person getPerson() {
         return person;
     }
 
-    public void setPeople(Person person) {
+    public void setPerson(Person person) {
         this.person = person;
     }
+
 }

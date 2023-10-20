@@ -1,5 +1,6 @@
 package com.test.library.dao;
 
+import com.test.library.model.Book;
 import com.test.library.model.Person;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -22,7 +23,7 @@ public class PersonDAO {
     @Transactional(readOnly = true)
     public List<Person> index() {
         Session session = sessionFactory.getCurrentSession();
-        return  session.createQuery("select p from Person p", Person.class).getResultList();
+        return  session.createQuery("from Person", Person.class).getResultList();
     }
     @Transactional(readOnly = true)
     public Person index(int id){
@@ -49,5 +50,17 @@ public class PersonDAO {
     public void save(Person people) {
         Session session = sessionFactory.getCurrentSession();
         session.persist(people);
+    }
+
+    @Transactional
+    public List<Book> ownerBook(int id){
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("from Book where person.id = :id", Book.class).setParameter("id", id).getResultList();
+    }
+
+    @Transactional
+    public List<Book> bookNotOwner(){
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("from Book where person.id = null", Book.class).getResultList();
     }
 }

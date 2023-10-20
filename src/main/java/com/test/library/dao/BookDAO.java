@@ -1,6 +1,7 @@
 package com.test.library.dao;
 
 import com.test.library.model.Book;
+import com.test.library.model.Person;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,4 +52,21 @@ public class BookDAO {
         session.persist(book);
     }
 
+    @Transactional
+    public void setOwner(int book_id, int person_id){
+        Session session = sessionFactory.getCurrentSession();
+       Book book = session.get(Book.class, book_id);
+       Person person = session.get(Person.class, person_id);
+       book.setPerson(person);
+        System.out.println("SetOwner выполнился");
+       session.merge(book);
+    }
+
+    @Transactional
+    public void deleteOwner(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        Book book = session.get(Book.class, id);
+        book.setPerson(null);
+        session.merge(book);
+    }
 }

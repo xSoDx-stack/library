@@ -22,6 +22,7 @@ public class Person {
     @OneToMany(mappedBy = "person", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private List<Book> books;
 
+
     public Person() {
     }
 
