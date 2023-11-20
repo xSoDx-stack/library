@@ -1,9 +1,9 @@
 package com.test.library.controller;
 
-import com.test.library.dao.BookDAO;
-import com.test.library.dao.PersonDAO;
 import com.test.library.model.Book;
 import com.test.library.model.Person;
+import com.test.library.services.BookService;
+import com.test.library.services.PeopleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/")
 public class PersonController {
-    private final PersonDAO personDAO;
-    private final BookDAO bookDAO;
+    private final PeopleService peopleService;
+    private final BookService bookService;
 
     @Autowired
-    public PersonController(PersonDAO personDAO, BookDAO bookDAO) {
-        this.personDAO = personDAO;
-        this.bookDAO = bookDAO;
+    public PersonController(PeopleService peopleService, BookService bookService) {
+        this.peopleService = peopleService;
+        this.bookService = bookService;
     }
 
     @GetMapping("favicon.ico")
@@ -28,50 +28,48 @@ public class PersonController {
 
     @GetMapping()
     public String index(Model model, @ModelAttribute("people") Person person){
-        model.addAttribute("person", personDAO.index());
+        model.addAttribute("person", peopleService.findAll());
         return "person/people";
     }
 
     @GetMapping("/{id}/show")
     public String show(Model model, @PathVariable int id,
                        @ModelAttribute("books") Book book) {
-        model.addAttribute("people", personDAO.index(id));
-        model.addAttribute("bookOwner", personDAO.ownerBook(id));
-        model.addAttribute("bookNotOwner", personDAO.bookNotOwner());
+        model.addAttribute("people", peopleService.findOne(id));
+        model.addAttribute("bookOwner", bookService.findByOwner(id));
+        model.addAttribute("bookNotOwner", bookService.findByOwner(null));
         return "person/peopleShow";
     }
 
     @PostMapping("/{id}/edit")
     public String edit(@ModelAttribute("people") Person people,
                        @PathVariable int id){
-        personDAO.edit(id, people);
-        System.out.println("Пользователь успешно изменён");
-        return "person/peopleShow";
+        peopleService.update(id, people);
+        return "redirect:/{id}/show";
     }
 
     @GetMapping("/{id}/delete")
     public String delete(@PathVariable("id") int id){
-        personDAO.delete(id);
+        peopleService.delete(id);
         return "redirect:/";
     }
 
     @PostMapping("/people/new")
     public String save(@ModelAttribute("people") Person people){
-        personDAO.save(people);
-        System.out.println("Новый пользователь создан");
+        peopleService.save(people);
         return "redirect:/";
     }
 
     @PatchMapping("/{id}/setBook")
     public String setBook(@ModelAttribute("books")Book book,
                           @PathVariable("id") int id){
-        bookDAO.setOwner(book.getId(), id);
+        peopleService.setOwner(book.getId(), id);
         return "redirect:/{id}/show";
     }
     @DeleteMapping("/{id}/delete/book/{person_id}")
     public String deleteOwner(@PathVariable("id") int id,
                               @PathVariable("person_id") int person_id){
-        bookDAO.deleteOwner(id);
+        bookService.deleteOwner(id);
         return "redirect:/{person_id}/show";
     }
 

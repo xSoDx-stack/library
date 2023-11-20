@@ -1,39 +1,39 @@
 package com.test.library.controller;
 
-import com.test.library.dao.BatchDao;
+import com.test.library.services.BatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/batch")
 
 public class BatchController {
-    private final BatchDao batchDao;
+    private final BatchService batchService;
 
     @Autowired
-    public BatchController(BatchDao batchDao){
-        this.batchDao = batchDao;
+    public BatchController(BatchService batchService){
+        this.batchService = batchService;
     }
 
     @RequestMapping("/person")
-    public String batchPerson(@RequestParam(value = "atm") int atm){
+    public String batchPerson(@ModelAttribute("atm") int atm){
         if (atm > 0){
-            batchDao.createPerson(atm);
+            batchService.createPerson(atm);
             return "redirect:/";
         }
-        batchDao.createPerson(1);
+        batchService.createPerson(1);
         return "redirect:/";
     }
 
     @RequestMapping("/books")
-    public String batchBook(@RequestParam(value = "atm") int atm){
+    public String batchBook(@ModelAttribute("atm") int atm){
         if (atm > 0){
-            batchDao.createBook(atm);
+            batchService.createBook(atm);
             return "redirect:/books";
         }
-        batchDao.createBook(1);
+        batchService.createBook(1);
         return "redirect:/books";
     }
 

@@ -98,8 +98,8 @@
     </tr>
     <tr>
         <td><h6 th:text="'#'"></h6></td>
-        <td>
-            <form th:if="${bookNotOwner}" th:method="PATCH" th:action="@{/{id}/setBook(id=${books.getId()})}">
+        <td th:if="${not #lists.isEmpty(bookNotOwner)}">
+            <form th:method="PATCH" th:action="@{/{id}/setBook(id=${books.getId()})}">
                 <label for="book"></label>
                     <select th:object="${books}" th:field="*{id}" id="book">
                         <option th:each="book:${bookNotOwner}" th:value="${book.getId()}" th:text="${book.getName()}">
