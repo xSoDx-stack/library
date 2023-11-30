@@ -24,8 +24,9 @@ public class PeopleService {
     }
 
     public List<Person> findAll(){
-        return peopleRepositories.findAll();
+        return peopleRepositories.findAllWithBooks();
     }
+
     public Person findOne(int id){
         Optional<Person> foundPerson = peopleRepositories.findById(id);
         return foundPerson.orElse(null);
@@ -55,9 +56,4 @@ public class PeopleService {
             booksRepositories.save(book);
         });
     }
-
-
-
-
-
 }

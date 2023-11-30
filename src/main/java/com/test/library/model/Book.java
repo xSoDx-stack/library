@@ -18,7 +18,7 @@ public class Book {
     @Column(name = "year")
     private int year;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     private Person person;
 

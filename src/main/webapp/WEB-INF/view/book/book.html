@@ -91,6 +91,60 @@
     </tr>
     </tbody>
 </table>
+    <div class="d-grid gap-2" th:if="${pageSize} < ${books.getTotalElements()}">
+        <a class="btn btn-light btn-sm" role="button" th:text="'Показать ещё'"
+            th:href="@{'/books?' + 'page=' + ${page} + '&pageSize=' + ${pageSize + 10}}">
+        </a>
+    </div>
+<nav aria-label="Pagination" th:if="${books.getNumber() + 1 > 0}">
+    <ul class="pagination justify-content-center">
+        <li class="page-item" th:classappend="${books.getNumber() + 1 == 1} ? 'disabled'">
+            <a rel="tooltip" class="page-link"
+               th:href="@{'/books?' + 'page=' + 1}"
+               th:text="'<<'"
+               th:title="'Первая страница'">
+            </a>
+        </li>
+        <li class="page-item font-weight-bold" th:classappend="${books.getNumber() + 1 == 1} ? 'disabled'">
+            <a rel="tooltip" class="page-link"
+               th:href="@{'/books?' + 'page=' + ${books.getNumber()} + '&pageSize=' + ${pageSize}}"
+               th:text="'Предыдущая'"
+               th:title="'Предыдущая страница'">
+            </a>
+        </li>
+        <li class="page-item disabled" th:if="${books.getNumber() > 1}">
+            <a class="page-link" href="#">...</a>
+        </li>
+        <li class="page-item" aria-current="page" th:classappend="${page == books.getNumber()+1} ? 'active'"
+            th:each="page : ${#numbers.sequence(books.getNumber()+1 > 2 ? books.getNumber() - 1 : 1, books.getNumber() + 3 < books.getTotalPages() ? books.getNumber() + 3 : books.getTotalPages())}">
+               <a rel="tooltip" class="page-link"
+                  th:href="@{'/books?' + 'page=' + ${page} + '&pageSize=' + ${pageSize}}"
+                  th:text="${page}"
+                  th:title="'Страница ' + ${page}">
+               </a>
+        </li>
+        <li class="page-item disabled" th:if="${books.getNumber() + 2 < books.getTotalPages()}">
+            <a class="page-link" href="#">...</a>
+        </li>
+        <li class="page-item font-weight-bold" th:classappend="${books.getNumber() + 1 == books.getTotalPages()} ? 'disabled'">
+            <a rel="tooltip" class="page-link"
+               th:href="@{'/books?' + 'page=' + ${books.getNumber() + 2} + '&pageSize=' + ${pageSize}}"
+               th:text="'Следующая'"
+               th:title="'Следующая страница'">
+            </a>
+        </li>
+        <li class="page-item" th:classappend="${books.getNumber()+1 == books.getTotalPages()} ? 'disabled'">
+            <a rel="tooltip" class="page-link"
+               th:href="@{'/books?' + 'page=' + ${books.getTotalPages()} + '&pageSize=' + {pageSize}}"
+               th:text="'>>'"
+               th:title="'Последняя страница'">
+            </a>
+        </li>
+    </ul>
+
+</nav>
+
+
 <div th:replace="~{book/bookModal :: ModaltoBatch}"></div>
 <div th:replace="~{book/bookModal  :: ModaltoEditBook('a1')}"></div>
 

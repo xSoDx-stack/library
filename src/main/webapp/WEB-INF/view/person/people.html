@@ -41,14 +41,13 @@
         <th scope="col">#</th>
         <th scope="col">ФИО</th>
         <th scope="col">Год рождения</th>
-        <th scope="col">Операция</th>
+        <th scope="col">Список взятых книг</th>
     </tr>
     </thead>
     <tbody class="table-group-divider">
     <tr th:each="people, i:${person}">
         <th th:text="${i.count}">NumCount</th>
         <td>
-<!--            <h4 th:text="${people.getFullName()}"/>-->
             <div class="accordion accordion-flush" id="accordionFlushExample">
                 <div class="accordion-item">
                     <h2 class="accordion-header">
@@ -77,6 +76,22 @@
             <h4 th:text="${people.getYear()}"/>
         </td>
         <td>
+<!--            <p th:each="book:${people.getBooks()}">-->
+<!--            <a th:text="${book.getName()}" th:href="@{/books/{id}/show(id=${book.getId()})}" class="link-opacity-10-hover"/> <br />-->
+<!--            </p>-->
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                        th:classappend="${people.getBooks().size() == 0} ? 'disabled'"
+                        th:text="${people.getBooks().size() > 0} ? 'У читателя есть книги' : 'Читатель ещё не взял книг'">
+                </button>
+                <ul class="dropdown-menu">
+                    <li th:each="book:${people.getBooks()}">
+                        <a th:text="${book.getName()}" class="dropdown-item"
+                           th:href="@{/books/{id}/show(id=${book.getId()})}">bookName</a>
+                    </li>
+                </ul>
+            </div>
+
         </td>
     </tr>
     </tbody>

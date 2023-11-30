@@ -3,6 +3,8 @@ package com.test.library.services;
 import com.test.library.model.Book;
 import com.test.library.repositories.BooksRepositories;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,8 +21,18 @@ public class BookService {
         this.booksRepositories = booksRepositories;
     }
 
-    public List<Book> findAll(){
-        return booksRepositories.findAll();
+    public Page<List<Book>> findAll(Optional<Integer> pageNumber, Integer pageSize){
+        return booksRepositories.findByAllWithPerson(PageRequest.of(pageNumber(pageNumber), pageSize));
+    }
+    public Integer pageNumber(Optional<Integer> page){
+        int pageNum = page.orElse(0);
+        if(pageNum<=1){
+            pageNum = 0;
+        }
+        else{
+            pageNum--;
+        }
+        return pageNum;
     }
 
     public Book findOne(int id){

@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/books")
 public class BookController {
@@ -26,10 +28,15 @@ public class BookController {
     public void disableFavicon() {
     }
 
+
     @GetMapping()
     public String index(Model model,
-                        @ModelAttribute("book") Book books){
-        model.addAttribute("books", bookService.findAll());
+                        @ModelAttribute("book") Book books,
+                        @RequestParam(defaultValue = "1", value = "page") Optional<Integer> page,
+                        @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize){
+        model.addAttribute("books", bookService.findAll(page,pageSize));
+        model.addAttribute("pageSize", pageSize);
+        model.addAttribute("page", page.get());
 
         return "book/book";
     }
